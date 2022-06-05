@@ -1,11 +1,11 @@
 :host {
   display: block;
-  width: 200px;
-  padding: 16px;
+  width: 160px;
+  padding: 0px;
 }
 .color-wrapper {
   display: flex;
-  height: 200px;
+  height: 120px;
 }
 
 .input-wrapper {

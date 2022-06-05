@@ -22,10 +22,8 @@
       </mat-panel-title> 
     </mat-expansion-panel-header> 
  
-    <mat-form-field class="example-full-width" appearance="fill">
-      <textarea matInput placeholder="Content" [(ngModel)]="node.content"
-      > </textarea>
-    </mat-form-field>
+    <textarea matInput placeholder="Content" [(ngModel)]="node.content"
+    > </textarea>
     <div>
       <mat-label>Binding</mat-label>
       <br>
@@ -42,10 +40,9 @@
     </mat-expansion-panel-header> 
     <div>
       <mat-label>Cỡ chữ </mat-label>
-    <mat-form-field class="example-full-width" appearance="fill">
       <input type="number" matInput placeholder="Size" [ngModel]="node.attributes['font-size']" (ngModelChange)="changeAttribute('font-size',$event)"
       />
-    </mat-form-field>
+      <br/>
     </div>
 
     <div>
@@ -100,10 +97,8 @@
     
     <div>
       <mat-label>Mức ưu tiên</mat-label>
-    <mat-form-field class="example-full-width" appearance="fill">
       <input type="number" matInput placeholder="Size" [ngModel]="node.attributes['flex']" (ngModelChange)="changeAttribute('flex',$event)"
       />
-    </mat-form-field>
     </div>
 
   

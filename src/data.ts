@@ -1,4 +1,4 @@
-import { LabelComponent } from "./app/components/input-components";
+import { ColumnComponent, LabelComponent } from "./app/components/input-components";
 import { ColumnComponentBuild, LabelComponentBuild, RowComponentBuild } from "./app/models/component-build";
 
 export interface TreeNode {
@@ -13,7 +13,8 @@ export interface DropInfo {
 }
 
 export var demoData: TreeNode[] = [
-  new LabelComponentBuild() 
+  new LabelComponentBuild(),
+  new ColumnComponentBuild()
 ]
 
 

@@ -1,8 +1,17 @@
 import { Type } from "@angular/core";
 import { TreeNode } from "src/data";
-import * as uuid from "uuid";
 import { IDisplayComponent } from "../components/display-builder-component";
 import { ColumnComponent, DefaultComponent, LabelComponent } from "../components/input-components";
+
+export function getUniqueId(parts: number): string {
+    const stringArr = [];
+    for(let i = 0; i< parts; i++){
+      // tslint:disable-next-line:no-bitwise
+      const S4 = (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+      stringArr.push(S4);
+    }
+    return stringArr.join('-');
+  }
 
 export interface ConponentConfig {
     name: String
@@ -31,7 +40,7 @@ export  class ColumnComponentBuild extends ComponentBuild {
     type="column"
     constructor(){
         super();
-        this.id = uuid.v4(); 
+        this.id = getUniqueId(10); 
         this.attributes["flex"] = 1
     }
     getName() {
@@ -44,7 +53,7 @@ export class RowComponentBuild extends ComponentBuild {
     type="row"
     constructor(){
         super();
-        this.id = uuid.v4(); 
+        this.id = getUniqueId(10); 
         this.attributes["flex"] = 1
     }
     getName() {
@@ -59,7 +68,7 @@ export class LabelComponentBuild extends ComponentBuild {
     type="label"
     constructor(){
         super();
-        this.id = uuid.v4(); 
+        this.id = getUniqueId(10); 
         this.attributes["font-size"] = 14
         this.attributes["font-style"] = 'normal'
         this.attributes["aligment"] = 'left'

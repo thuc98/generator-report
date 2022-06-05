@@ -106,7 +106,9 @@
     padding: 50px;
     margin:auto;
     box-shadow: 0px 0px 25px #AAAAAA;
-
+    min-height: 80%;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .buildform-container {
@@ -116,13 +118,14 @@
 .container-drop {
     flex: 1;
     overflow: auto  ;
-    min-height: 98vh;
+    min-height: 97vh;
 }
-
+ 
 .target-attribute {
-    width: 280px;
+    width: 200px;
 }
 
 .node-item.selected {
     background-color: lightsteelblue;
 }
+
