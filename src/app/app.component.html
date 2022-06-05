@@ -1,0 +1,68 @@
+
+<ng-template #tmplNode let-node="node">
+
+  <div   (click)="onSelecNode($event,node)" [class]="getNodeClass(node)" [attr.data-id]="node.id" [attr.id]="'node-'+node.id">
+    
+    <display-dynamic-builder  [component]="node"  >
+    <!---  <div class="node-title"  >
+          {{node.id}} 
+        <span class="item-notes"> ({{node.children.length}})</span> 
+      </div>
+-->
+      <div *ngIf="node.children.length" class='node-children' 
+          cdkDropList [cdkDropListData]="node.children"
+          [id]="node.id" [cdkDropListConnectedTo]="service.dropTargetIds"
+          (cdkDropListDropped)="drop($event)"
+         
+          [cdkDropListSortingDisabled]="true">
+
+        <div  [style.flex]="getNodeFlex(child)"  *ngFor="let child of node.children" cdkDrag [cdkDragData]="child.id" 
+            (cdkDragMoved)="dragMoved($event)">
+          <ng-container *ngTemplateOutlet="tmplNode,context:{node:child}"></ng-container>  
+        </div>
+
+      </div>
+  </display-dynamic-builder>
+
+  </div>
+</ng-template>
+
+ 
+<mat-drawer-container class="example-container" cdkDropListGroup>
+  <mat-drawer mode="side" opened> 
+    <app-input-drag-drops></app-input-drag-drops>
+  </mat-drawer>
+  <mat-drawer-content>
+          
+  <div class="buildform-container">
+    <div class="container-drop">
+      <div class="main-content" cdkDropList [cdkDropListData]="service.nodes"
+        [id]="'main'" [cdkDropListConnectedTo]="service.dropTargetIds"
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListSortingDisabled]="true">
+    
+        <div *ngFor="let node of service.nodes" cdkDrag [cdkDragData]="node.id"      
+        (cdkDragMoved)="dragMoved($event)">
+    
+        <ng-container *ngTemplateOutlet="tmplNode,context:{node:node}"></ng-container>
+    
+        </div>
+    
+        </div>
+    </div>
+    <div class="target-attribute">
+        <app-target-attribute></app-target-attribute>
+    </div>
+
+  </div>
+
+  </mat-drawer-content>
+  
+  
+</mat-drawer-container>
+
+
+<hr />
+
+<p><strong>tree data</strong></p>
+<pre>{{service.nodes|json}}</pre>

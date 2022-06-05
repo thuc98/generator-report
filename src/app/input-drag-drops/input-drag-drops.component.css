@@ -1,0 +1,10 @@
+.target-item {
+    padding: 2px;
+}
+#input-dropid {
+    padding: 10px;
+}
+
+.target-item {
+    cursor: move;
+}

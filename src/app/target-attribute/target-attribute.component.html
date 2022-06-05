@@ -1,0 +1,115 @@
+
+
+<mat-accordion  *ngIf="getComponentBuilNode() != null" class="example-headers-align" multi>
+
+ 
+ 
+  <mat-card><mat-card-content>	Tên: {{getName()}}</mat-card-content></mat-card>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      Màu sắc
+    </mat-expansion-panel-header> 
+    
+    <app-color-picker [color]="getAttribute('color')" (selectedColor)="setColor($event)"></app-color-picker>
+
+  </mat-expansion-panel>
+ 
+  <mat-expansion-panel >
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Nội dung
+      </mat-panel-title> 
+    </mat-expansion-panel-header> 
+ 
+    <mat-form-field class="example-full-width" appearance="fill">
+      <textarea matInput placeholder="Content" [(ngModel)]="node.content"
+      > </textarea>
+    </mat-form-field>
+    <div>
+      <mat-label>Binding</mat-label>
+      <br>
+      <code>Chức năng Binding: chưa có trên bản demo </code>
+    </div>
+  </mat-expansion-panel> 
+
+  
+  <mat-expansion-panel *ngIf="isTextNode()">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Định dạng chữ   
+      </mat-panel-title> 
+    </mat-expansion-panel-header> 
+    <div>
+      <mat-label>Cỡ chữ </mat-label>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <input type="number" matInput placeholder="Size" [ngModel]="node.attributes['font-size']" (ngModelChange)="changeAttribute('font-size',$event)"
+      />
+    </mat-form-field>
+    </div>
+
+    <div>
+      <mat-label>Kiểu chữ </mat-label>
+     <div>
+      <mat-button-toggle-group #group2="matButtonToggleGroup" name="fontStyle" aria-label="Font Style" [value]="node.attributes['font-style']" (change)="changeAttribute('font-style',group2.value)">
+        <mat-button-toggle value="normal">Normal</mat-button-toggle>
+       <mat-button-toggle value="italic">Italic</mat-button-toggle> 
+       <mat-button-toggle value="oblique">Oblique</mat-button-toggle>
+     </mat-button-toggle-group>
+     </div>
+    </div>
+    <br>
+    <div>
+      <mat-label>In đậm</mat-label>
+     <div>
+      <mat-button-toggle-group #group3="matButtonToggleGroup" name="fontStyle" aria-label="Font weight" [value]="node.attributes['font-weight']" (change)="changeAttribute('font-weight',group3.value)">
+        <mat-button-toggle value="normal">Normal</mat-button-toggle>
+        <mat-button-toggle value="bold">Bold</mat-button-toggle>
+       <mat-button-toggle value="900">Extra Bold</mat-button-toggle> 
+     </mat-button-toggle-group>
+     </div>
+    </div>
+    <br>
+
+    <div>
+      <mat-label>Căng ngang </mat-label>
+      <mat-button-toggle-group #group="matButtonToggleGroup" [value]="node.attributes['aligment']" (change)="changeAttribute('aligment',group.value)" >
+        <mat-button-toggle value="left" aria-label="Text align left">
+          <mat-icon>format_align_left</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="center" aria-label="Text align center">
+          <mat-icon>format_align_center</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="right" aria-label="Text align right">
+          <mat-icon>format_align_right</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="justify" aria-label="Text align justify">
+          <mat-icon>format_align_justify</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+     </div>
+     
+  </mat-expansion-panel>
+  <mat-expansion-panel >
+    <mat-expansion-panel-header>
+      Khung
+    </mat-expansion-panel-header> 
+    
+    <mat-checkbox class="example-margin" [(ngModel)]="node.attributes['inline']">Không giãn</mat-checkbox>
+    
+    
+    <div>
+      <mat-label>Mức ưu tiên</mat-label>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <input type="number" matInput placeholder="Size" [ngModel]="node.attributes['flex']" (ngModelChange)="changeAttribute('flex',$event)"
+      />
+    </mat-form-field>
+    </div>
+
+  
+  </mat-expansion-panel>
+ 
+
+</mat-accordion>
+ 
+ 
