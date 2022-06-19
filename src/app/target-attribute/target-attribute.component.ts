@@ -20,8 +20,7 @@ export class TargetAttributeComponent implements OnInit {
   }
 
   ngOnChanges()
-  {
-    console.log("123123")
+  { 
     var node =   this.getComponentBuilNode() ;
     this.node = node;
   }

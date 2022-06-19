@@ -33,14 +33,24 @@
     <app-input-drag-drops></app-input-drag-drops>
   </mat-drawer>
   <mat-drawer-content>
-          
+
+ <!-- <button mat-raised-button color="primary" (click)="exportdata()">Export - XSL Apache-FO </button>
+  -->
+
   <div class="buildform-container">
     <div class="container-drop">
+      
       <div class="main-content" cdkDropList [cdkDropListData]="service.nodes"
         [id]="'main'" [cdkDropListConnectedTo]="service.dropTargetIds"
         (cdkDropListDropped)="drop($event)"
         [cdkDropListSortingDisabled]="true">
-    
+        <div class ="logo-container"> 
+          <div class="LOGO">
+
+          </div>
+          <textarea placeholder="Tên báo cáo" class="report_title"></textarea>
+          </div>
+
         <div *ngFor="let node of service.nodes" cdkDrag [cdkDragData]="node.id"      
         (cdkDragMoved)="dragMoved($event)">
     
@@ -50,10 +60,10 @@
     
         </div>
     </div>
-    <div class="target-attribute">
+   <!--- <div class="target-attribute">
         <app-target-attribute></app-target-attribute>
     </div>
-
+-->
   </div>
 
   </mat-drawer-content>

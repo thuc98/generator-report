@@ -1,19 +1,26 @@
 import { CdkDragMove } from '@angular/cdk/drag-drop';
 import { Injectable } from '@angular/core';
-import { demoData, DropInfo, TreeNode } from 'src/data';
-
+import {  DropInfo, TreeNode } from 'src/data';
+import { parseFromJson } from './models/component-build';
+import { demoData } from "./demo"
+import { Observable, Observer } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class DragDropService {
-  constructor() { }
+  constructor() { 
 
-  nodes: TreeNode[] = demoData;
+   this.nodes = parseFromJson(demoData);
+   this.prepareDragDrop( this.nodes );
+  }
+
+  nodes: TreeNode[] = [];
   dropTargetIds = [];
   nodeLookup = {};
   dropActionTodo: DropInfo = null;
   selectedNode: TreeNode;
   totalCreate = 0;
+  onChangeObx: Observer<TreeNode[]>;
   
 
 
@@ -36,9 +43,14 @@ deleteItemInTree(node:TreeNode, treeRoot: TreeNode[]) {
       this.deleteItemInTree(node,root.children);
     });
   }
+
+  this.onChangeObx.next(this.nodes)
  
 }
 
+droped() {
+  this.onChangeObx.next(this.nodes)
+}
 deleteCurrentSelected(){
   var node = this.selectedNode;
   if (node == null){
@@ -71,6 +83,5 @@ deleteCurrentSelected(){
         }
        
     }
-  }
-
+  } 
 }

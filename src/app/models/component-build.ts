@@ -29,7 +29,10 @@ export abstract class ComponentBuild implements TreeNode {
     attributes: any = {};
     type = "Node"
     getName(){
-        return "node" + this.id;
+        return "" + this.id;
+    }
+    setName(name) {
+        
     }
 }
 
@@ -37,6 +40,7 @@ export abstract class ComponentBuild implements TreeNode {
 export  class ColumnComponentBuild extends ComponentBuild {
     isContainer: boolean = true;
     view = ColumnComponent
+    name = ""
     type="column"
     constructor(){
         super();
@@ -44,76 +48,91 @@ export  class ColumnComponentBuild extends ComponentBuild {
         this.attributes["flex"] = 1
     }
     getName() {
-        return "cplumn_"+this.index;
+        return this.name;
     }
+    setName(name) {
+        this.name = name   
+        }
 }
-
-export class RowComponentBuild extends ComponentBuild {
-    isContainer: boolean = true;
-    type="row"
-    constructor(){
-        super();
-        this.id = getUniqueId(10); 
-        this.attributes["flex"] = 1
-    }
-    getName() {
-        return "row_"+this.index;
-    }
-}
-
+ 
 
 export class LabelComponentBuild extends ComponentBuild {
     isContainer: boolean = false;
-    view = LabelComponent
+    view = LabelComponent 
+    name = ""
     type="label"
     constructor(){
         super();
         this.id = getUniqueId(10); 
-        this.attributes["font-size"] = 14
-        this.attributes["font-style"] = 'normal'
-        this.attributes["aligment"] = 'left'
-        this.attributes["flex"] = 1
     }
     getName() {
-        return "label_"+this.index;
+        return this.name;
+    }
+    setName(name) {
+    this.name = name   
     }
 }
  
 export const inputTargets:ConponentConfig[]  = [
+    
     {
-        name: "Dòng",
-        icon: "border_clear",
-        component: () => {
-            return new RowComponentBuild()
-        }
-            
-    }, 
-    {
-        name: "Cột",
+        name: "Ứng dụng",
         icon: "border_clear",
         component: () => {
             return new ColumnComponentBuild()
         }
     }, 
     {
-        name: "Chữ ",
+        name: "Lỗi",
         icon: "format_size",
         component: () => {
             return new LabelComponentBuild()
         }
-    },
-    {
-        name: "Bảng",
-        icon: "table",
-        component: () => {
-            return null
-        }
-    },
-    {
-        name: "Hình ảnh",
-        icon: "image",
-        component: () => {
-            return null
-        }
-    }
+    } 
 ]
+
+export const parseFromJson = (json) => {
+    var items = [];
+    for (var element of json) {
+        var component = null
+        if (element.type == "label"){
+            component = new LabelComponentBuild()
+            
+        } else if (element.type == "column"){
+            component = new ColumnComponentBuild()
+        } else {
+            continue 
+        }
+        component.attributes = element.attributes
+        component.content = element.content
+        component.index = element.index
+        component.name = element.name
+        if (element.children && element.children.length > 0) {
+            component.children = parseFromJson(element.children);
+        } 
+        items.push(component)
+    }
+    return items;
+}
+
+export const getVulnerabilites = (name = null): any[] => {
+if (name != null) {
+    return[
+        {
+          name:"So 1",
+          desc:"2",
+          level:"Cao"
+        }]
+}
+  return [
+    {
+      name:"So 1",
+      desc:"2",
+      level:"Cao"
+    }, {
+      name:"So 2",
+      desc:"2",
+      level:"Cao"
+    }
+  ]
+}

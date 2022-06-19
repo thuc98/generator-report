@@ -6,6 +6,9 @@ import { CdkDragMove } from "@angular/cdk/drag-drop";
 import { DragDropService } from "./drag-drop.service";
 import { ComponentBuild } from "./models/component-build";
 import { MatSnackBar } from "@angular/material";
+import XmlUtils from "./models/xml-utils";
+import { DataService } from "./data.service";
+import { Observable } from "rxjs";
 
 @Component({ 
     selector: "my-app",
@@ -17,12 +20,23 @@ export class AppComponent {
  
 
     constructor(
+        @Inject(DataService) private _dataService: DataService,
         @Inject(MatSnackBar) private _snackBar: MatSnackBar,
         @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef,
         @Inject(DragDropService) public service: DragDropService,
         @Inject(DOCUMENT) private document: Document
         ) { 
-        this.service.prepareDragDrop(this.service.nodes);
+            this._dataService.getVul();
+            this._dataService.restore().then((data)=>{
+                console.log("restore",data)
+                this.service.nodes =  data ||[ ];
+                this.service.prepareDragDrop(this.service.nodes);
+            })
+            this._dataService.registDataChange((obs)=>this.service.onChangeObx = obs)
+            
+       
+            
+       
     }
 
     @HostListener('document:keydown.delete', ['$event'])
@@ -56,14 +70,22 @@ export class AppComponent {
 
 
     drop(event) {
-        
-        if (!this.service.dropActionTodo ) return;
+        var draggedItemId = event.item.data;
+        var draggedItem = null;
+
+        if (!this.service.dropActionTodo ) {
+            this.clearDragInfo(true)
+            if (this.service.nodes.length == 0 && draggedItemId instanceof ComponentBuild  && draggedItemId.isContainer) {
+                this.service.nodes.push(draggedItemId)
+                this.service.prepareDragDrop(this.service.nodes)
+            }
+            return;
+        };
         if (event.item.data == null) { 
             this._snackBar.open("Chức năng này: chưa có trên bản demo", "Đã hiểu")
             return
         }
-        var draggedItemId = event.item.data;
-        var draggedItem = null;
+       
         var needRemove = false
         if ( draggedItemId instanceof ComponentBuild ) {
             draggedItem = draggedItemId
@@ -82,8 +104,7 @@ export class AppComponent {
             if (needRemove) {
                 const oldItemContainer = parentItemId != 'main' ? this.service.nodeLookup[parentItemId].children : this.service.nodes;
                 let i = oldItemContainer.findIndex(c => c.id === draggedItemId);
-                oldItemContainer.splice(i, 1);
-                console.log("remove", draggedItem)
+                oldItemContainer.splice(i, 1); 
             }
         }catch(e){
 
@@ -91,22 +112,33 @@ export class AppComponent {
         switch (this.service.dropActionTodo.action) {
             case 'before':
             case 'after':
+                if (this.service.nodes == newContainer && !draggedItem.isContainer) {
+                    this.clearDragInfo(true)
+                    return
+                }
                 const targetIndex = newContainer.findIndex(c => c.id === this.service.dropActionTodo.targetId);
                 if (this.service.dropActionTodo.action == 'before') {
                     newContainer.splice(targetIndex, 0, draggedItem);
                 } else {
                     newContainer.splice(targetIndex + 1, 0, draggedItem);
                 }
+                
                 break;
 
             case 'inside':
                 if (this.service.nodeLookup[this.service.dropActionTodo.targetId] && !this.service.nodeLookup[this.service.dropActionTodo.targetId].isContainer) {
+                    this.clearDragInfo(true)
+                    return
+                }
+                var parentNode = this.service.nodeLookup[this.service.dropActionTodo.targetId];
+                if (parentNode.type == draggedItem.type) {
+                    this.clearDragInfo(true)
                     return
                 }
                 this.service.nodeLookup[this.service.dropActionTodo.targetId].children.push(draggedItem) 
                 break;
         }
-
+        this.service.droped()
         this.clearDragInfo(true)
     }
     getParentNodeId(id: string, nodesToSearch: TreeNode[], parentId: string): string {
@@ -155,5 +187,9 @@ export class AppComponent {
     getNodeFlex(node){ 
         var flex =  node.attributes["flex"] 
         return flex 
+    }
+
+    exportdata() {
+       (new  XmlUtils()).test(this.service.nodes)
     }
 }

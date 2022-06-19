@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@agentepsilon/decko": "^2.0.1", 
+    "@agentepsilon/decko": "^2.0.1",
     "@angular/animations": "^8.2.14",
     "@angular/cdk": "^8.2.3",
     "@angular/common": "^8.0.0",
@@ -13,9 +13,10 @@
     "@angular/material": "^8.0.0",
     "@angular/platform-browser": "^8.0.0",
     "@angular/platform-browser-dynamic": "^8.0.0",
-    "@angular/router": "^8.0.0", 
+    "@angular/router": "^8.0.0",
     "core-js": "2",
-    "rxjs": "^6.5.2", 
+    "jsx-xsl-fo": "^0.3.1",
+    "rxjs": "^6.5.2",
     "zone.js": "^0.9.1"
   },
   "scripts": {

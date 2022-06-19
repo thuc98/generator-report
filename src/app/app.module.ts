@@ -21,15 +21,20 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 import {
   MatSidenavModule,
 } from '@angular/material';
 import { TargetAttributeComponent } from './target-attribute/target-attribute.component';
+import { DataService } from './data.service';
 @NgModule({ 
   providers: [
-    DragDropService
+    DragDropService,
+    DataService,
+    HttpClient
   ],
   imports:      [ 
     BrowserModule, 
@@ -47,7 +52,9 @@ import { TargetAttributeComponent } from './target-attribute/target-attribute.co
     ColorPickerModule,
     MatButtonToggleModule,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatAutocompleteModule,
+    HttpClientModule
   ],
   declarations: [ AdDirective, AppComponent, HelloComponent , ColumnComponent ,LabelComponent,DefaultComponent, DisplayBuilderComponent, InputDragDropsComponent, TargetAttributeComponent],
   entryComponents: [ColumnComponent, DefaultComponent, LabelComponent],

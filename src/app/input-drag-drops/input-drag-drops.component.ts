@@ -2,6 +2,7 @@ import { debounce } from '@agentepsilon/decko';
 import { CdkDragExit, CdkDragMove, CdkDragRelease } from '@angular/cdk/drag-drop';
 import { DOCUMENT } from '@angular/common';
 import { Component, ContentChild, Inject, OnInit, TemplateRef } from '@angular/core';
+import { DataService } from '../data.service';
 import { DragDropService } from '../drag-drop.service';
 import { ConponentConfig, inputTargets } from '../models/component-build';
 
@@ -15,6 +16,7 @@ export class InputDragDropsComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) private document: Document,
     @Inject(DragDropService) public service: DragDropService,
+    @Inject(DataService) private _dataService: DataService,
   ) { }
 
   targets: ConponentConfig[] = inputTargets;
@@ -88,6 +90,10 @@ clearDragInfo(dropped = false) {
     this.document
         .querySelectorAll(".drop-inside")
         .forEach(element => element.classList.remove("drop-inside"));
+}
+
+saveData() {
+  this._dataService.save(this.service.nodes)
 }
 
 }

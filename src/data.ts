@@ -1,5 +1,5 @@
 import { ColumnComponent, LabelComponent } from "./app/components/input-components";
-import { ColumnComponentBuild, LabelComponentBuild, RowComponentBuild } from "./app/models/component-build";
+import { ColumnComponentBuild, LabelComponentBuild } from "./app/models/component-build";
 
 export interface TreeNode {
   id: string;

@@ -4564,6 +4564,15 @@ jsprim@^1.2.2:
     json-schema "0.4.0"
     verror "1.10.0"
 
+jsx-xsl-fo@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/jsx-xsl-fo/-/jsx-xsl-fo-0.3.1.tgz#5e6b41bb529c28c0df8e83ee3c78f59f0b034d21"
+  integrity sha512-wseWcPjwTIwgdczX4VysFypeIwng+UrTcLy6z/um/lr0OTTCZZIGujOhngQhmhUemuZtxRevmSDjWnEK4dF35Q==
+  dependencies:
+    decamelize "^2.0.0"
+    uuid "^3.3.2"
+    xml-writer "^1.7.0"
+
 jszip@^3.1.3:
   version "3.10.0"
   resolved "https://registry.npmjs.org/jszip/-/jszip-3.10.0.tgz"
@@ -8497,6 +8506,11 @@ ws@~3.3.1:
     async-limiter "~1.0.0"
     safe-buffer "~5.1.0"
     ultron "~1.1.0"
+
+xml-writer@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/xml-writer/-/xml-writer-1.7.0.tgz#b76f1d591c16a2634ebdb703c7bdbd0fd6819065"
+  integrity sha1-t28dWRwWomNOvbcDx729D9aBkGU=
 
 xml2js@^0.4.17:
   version "0.4.23"
