@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material';
 import { DragDropService } from '../drag-drop.service';
 import { ComponentBuild, LabelComponentBuild } from '../models/component-build';
 
@@ -15,7 +16,9 @@ export class TargetAttributeComponent implements OnInit {
   lastId = "";
   constructor(
     @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef,
-  @Inject(DragDropService) public service: DragDropService,) { 
+  @Inject(DragDropService) public service: DragDropService,
+  @Inject(MatBottomSheet) private _bottomSheet: MatBottomSheet,
+  ) { 
     
   }
 
@@ -79,4 +82,6 @@ export class TargetAttributeComponent implements OnInit {
   isLayout() {
     return this.node.isContainer;
   }
+
+
 }

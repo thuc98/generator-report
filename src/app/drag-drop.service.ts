@@ -21,6 +21,8 @@ export class DragDropService {
   selectedNode: TreeNode;
   totalCreate = 0;
   onChangeObx: Observer<TreeNode[]>;
+  template: any = null
+  name = ""
   
 
 

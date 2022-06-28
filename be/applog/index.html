@@ -1,0 +1,132 @@
+<html>
+<head>
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/css/uikit.min.css" />
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit-icons.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <style>
+        .display-url {
+         display: -webkit-box;
+        -webkit-line-clamp: 1;  
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%
+        } 
+        div {
+  word-wrap: break-word;
+}
+.container {
+    display: fixed;
+    height: 100%;
+    width: 100%;
+}
+.list-request {
+    overflow-y: auto;
+}
+.preview-request {
+    overflow-y: auto;
+}
+    </style>
+</head>
+<body>
+
+    <div class="uk-flex container" >
+        <div class ="list-request uk-width-1-2">  
+        </div> 
+        <div class ="preview-request uk-width-1-2"> 
+            <code>Request Detail</code>
+            <div class ="view-method">
+        
+            </div>  
+            <hr>
+            <code>Header</code>
+            <div class ="view-headers">
+        
+            </div>
+            <code>Request Body</code>
+            <div class ="view-body">
+         
+            </div>
+            <hr>
+            <code>Response Header</code>
+            <div class ="view-res-headers">
+          
+            </div>
+            <code>Response Body</code>
+            <div class ="view-res-body">
+             
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+      socket.on('log', function(msg) {
+        console.log(msg)
+      });
+
+      socket.on('log-request', function(msg) {
+        appendLog(msg)
+      });
+
+      function viewdetail(data) {
+ 
+          var method = data.method;
+          var labelColor = getLabel(method);
+          $(".view-method").html(`<span class="uk-label ${labelColor}"> ${method}</span> ${escape(data.url)}`)
+          $(".view-headers").html(`${escape(JSON.stringify(data.req_headers))}`)
+          $(".view-body").html(`${escape(data.req_body || "")}`)
+          $(".view-res-headers").html(`${escape(JSON.stringify(data.res_headers))}`)
+          $(".view-res-body").html(`${escape(data.res_body || "")}`)
+      }
+
+      const appendLog = (messageLog) => {
+        let parse = JSON.parse(messageLog);
+        let method = parse.method;
+        let labelColor =  getLabel(method)
+        console.log(messageLog)
+        let item = $(`  <div class="req-item uk-padding-small">
+                <div class ="display-url">
+                    <span class="uk-label ${labelColor}" style="width:30px"> ${method}</span>
+                    <span> ${parse.duration}  ${parse.status} </span>  
+                    <span > ${parse.url}</span>  
+                </div> 
+           </div>`)
+
+        $(".list-request").prepend(item)
+        item.on("click",()=> {
+            viewdetail(parse)
+        })
+      }
+
+      const getLabel = (method) => 
+      {
+        let labelColor = "uk-label-success"
+        if (method == "PUT") {
+            labelColor = "uk-label-warning"
+        } else if (method == "DELETE") {
+            labelColor = "uk-label-danger	"
+        } else if (method == "GET") {
+            labelColor = "uk-label"
+        }
+
+        return  labelColor
+      }
+
+      function escape(htmlStr) {
+   return htmlStr.replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#39;");        
+
+}
+    </script>
+</html>

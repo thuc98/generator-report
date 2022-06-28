@@ -5,10 +5,11 @@ import { debounce } from "@agentepsilon/decko";
 import { CdkDragMove } from "@angular/cdk/drag-drop";
 import { DragDropService } from "./drag-drop.service";
 import { ComponentBuild } from "./models/component-build";
-import { MatSnackBar } from "@angular/material";
+import { MatBottomSheet, MatSnackBar } from "@angular/material";
 import XmlUtils from "./models/xml-utils";
 import { DataService } from "./data.service";
 import { Observable } from "rxjs";
+import { TemplateSelectionComponent } from "./template-selection/template-selection.component";
 
 @Component({ 
     selector: "my-app",
@@ -20,13 +21,21 @@ export class AppComponent {
  
 
     constructor(
+        @Inject(MatBottomSheet) private _bottomSheet: MatBottomSheet,
         @Inject(DataService) private _dataService: DataService,
         @Inject(MatSnackBar) private _snackBar: MatSnackBar,
         @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef,
         @Inject(DragDropService) public service: DragDropService,
         @Inject(DOCUMENT) private document: Document
         ) { 
-            this._dataService.getVul();
+            this._dataService.getAppResource();
+            this._dataService.restoreInfo().then((data)=> {
+                if (data == null || data["template"] == null) {
+                    this._bottomSheet.open(TemplateSelectionComponent);
+                }
+                this.service.name = data && data["name"]
+                this.service.template = data && data["template"]
+            })
             this._dataService.restore().then((data)=>{
                 console.log("restore",data)
                 this.service.nodes =  data ||[ ];
@@ -35,7 +44,7 @@ export class AppComponent {
             this._dataService.registDataChange((obs)=>this.service.onChangeObx = obs)
             
        
-            
+        
        
     }
 
@@ -190,6 +199,8 @@ export class AppComponent {
     }
 
     exportdata() {
-       (new  XmlUtils()).test(this.service.nodes)
+      // (new  XmlUtils()).test(this.service.nodes)
+      this._bottomSheet.open(TemplateSelectionComponent);
+
     }
 }

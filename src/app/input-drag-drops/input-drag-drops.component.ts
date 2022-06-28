@@ -2,9 +2,11 @@ import { debounce } from '@agentepsilon/decko';
 import { CdkDragExit, CdkDragMove, CdkDragRelease } from '@angular/cdk/drag-drop';
 import { DOCUMENT } from '@angular/common';
 import { Component, ContentChild, Inject, OnInit, TemplateRef } from '@angular/core';
+import { MatBottomSheet } from '@angular/material';
 import { DataService } from '../data.service';
 import { DragDropService } from '../drag-drop.service';
 import { ConponentConfig, inputTargets } from '../models/component-build';
+import { TemplateSelectionComponent } from '../template-selection/template-selection.component';
 
 @Component({
   selector: 'app-input-drag-drops',
@@ -14,6 +16,7 @@ import { ConponentConfig, inputTargets } from '../models/component-build';
 export class InputDragDropsComponent implements OnInit {
 
   constructor(
+    @Inject(MatBottomSheet) private _bottomSheet: MatBottomSheet,
     @Inject(DOCUMENT) private document: Document,
     @Inject(DragDropService) public service: DragDropService,
     @Inject(DataService) private _dataService: DataService,
@@ -92,8 +95,20 @@ clearDragInfo(dropped = false) {
         .forEach(element => element.classList.remove("drop-inside"));
 }
 
-saveData() {
-  this._dataService.save(this.service.nodes)
-}
+  saveData() {
+    this._dataService.save(this.service.nodes)
+    this._dataService.saveInfo({
+      name:this.service.name,
+      template: this.service.template
+    })
+  }
 
+
+  selectOpen() {
+    this._bottomSheet.open(TemplateSelectionComponent);
+  }
+  exportDocx() {
+
+    this._dataService.exportDocx(this.service.template, this.service.nodes, this.service.name)
+  }
 }

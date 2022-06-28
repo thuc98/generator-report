@@ -33,10 +33,10 @@
     <app-input-drag-drops></app-input-drag-drops>
   </mat-drawer>
   <mat-drawer-content>
-
- <!-- <button mat-raised-button color="primary" (click)="exportdata()">Export - XSL Apache-FO </button>
-  -->
-
+    <!--- 
+  <button mat-raised-button color="primary" (click)="exportdata()">Export - XSL Apache-FO </button>
+  
+--->
   <div class="buildform-container">
     <div class="container-drop">
       
@@ -48,7 +48,7 @@
           <div class="LOGO">
 
           </div>
-          <textarea placeholder="Tên báo cáo" class="report_title"></textarea>
+          <textarea [(ngModel)]="service.name" placeholder="Tên báo cáo" class="report_title"></textarea>
           </div>
 
         <div *ngFor="let node of service.nodes" cdkDrag [cdkDragData]="node.id"      
@@ -70,9 +70,4 @@
   
   
 </mat-drawer-container>
-
-
-<hr />
-
-<p><strong>tree data</strong></p>
-<pre>{{service.nodes|json}}</pre>
+ 

@@ -18,6 +18,10 @@ import { DataService } from "../data.service";
       </div>
       <div [style.display]="getDisplay()" >
       <div  >
+      <div>
+        Chi tiết:
+      <textarea style="width:100%" dnd-nodrag [ngModel] = "getAttribute('description')" (ngModelChange) = "setAttribute('description',$event)" ></textarea>
+      </div>
         <div class="group-input">
         <div>
          <label> Phiên bản:</label> <input [ngModel] = "getAttribute('version')" (ngModelChange) = "setAttribute('version',$event)"/>

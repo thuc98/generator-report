@@ -23,6 +23,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 
 
 import {
@@ -30,6 +31,8 @@ import {
 } from '@angular/material';
 import { TargetAttributeComponent } from './target-attribute/target-attribute.component';
 import { DataService } from './data.service';
+import { TemplateSelectionComponent } from './template-selection/template-selection.component';
+import { UploadTemplateComponent } from './upload-template/upload-template.component';
 @NgModule({ 
   providers: [
     DragDropService,
@@ -54,10 +57,11 @@ import { DataService } from './data.service';
     MatCheckboxModule,
     MatSnackBarModule,
     MatAutocompleteModule,
-    HttpClientModule
+    HttpClientModule,
+    MatBottomSheetModule
   ],
-  declarations: [ AdDirective, AppComponent, HelloComponent , ColumnComponent ,LabelComponent,DefaultComponent, DisplayBuilderComponent, InputDragDropsComponent, TargetAttributeComponent],
-  entryComponents: [ColumnComponent, DefaultComponent, LabelComponent],
+  declarations: [ AdDirective, AppComponent, HelloComponent , ColumnComponent ,LabelComponent,DefaultComponent, DisplayBuilderComponent, InputDragDropsComponent, TargetAttributeComponent, TemplateSelectionComponent, UploadTemplateComponent],
+  entryComponents: [ColumnComponent, DefaultComponent, LabelComponent, TemplateSelectionComponent,UploadTemplateComponent],
   exports:[MatSidenavModule, MatListModule  ],
   bootstrap:    [ AppComponent ]
 })

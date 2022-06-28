@@ -1,0 +1,44 @@
+{
+  "name": "docxtemplater-chart-module",
+  "version": "2.0.1",
+  "description": "Chart Module for docxtemplater v1.0",
+  "main": "js/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "docx",
+    "docxtemplater",
+    "generation",
+    "microsoft word",
+    "charts",
+    "chart"
+  ],
+  "devDependencies": {
+    "chai": "3.5.0",
+    "gulp": "3.9.1",
+    "gulp-coffee": "3.0.3",
+    "gulp-uglify": "1.5.3",
+    "gulp-watch": "4.3.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dderg/docxtemplater-chart-module.git"
+  },
+  "author": "Danila Dergachev <dderg@protonmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "docxtemplater": "^2.1.0",
+    "gulp-browserify": "^0.5.0",
+    "jszip": "^2.4.0",
+    "xmldom": "^0.1.19"
+  },
+  "bugs": {
+    "url": "https://github.com/dderg/docxtemplater-chart-module/issues"
+  },
+  "homepage": "https://github.com/dderg/docxtemplater-chart-module#readme",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  }
+}

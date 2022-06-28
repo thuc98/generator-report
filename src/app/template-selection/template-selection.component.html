@@ -1,0 +1,17 @@
+<div>
+  <h3>
+    Chọn mẫu
+  </h3>
+  <mat-nav-list>
+    <a *ngFor="let item of _dataService.templates" href="#" mat-list-item (click)="openLink($event, item)" >
+      <span mat-line>{{item["name"]}}</span>
+      <span mat-line>{{item["_id"]}}</span>
+      <span *ngIf="service.template && item['_id'] == service.template['_id']">Đang chọn</span>
+    </a> 
+    <a href="#" mat-list-item (click)="uploadTemplate($event)" >
+      <span mat-line>Upload template</span>
+      <span mat-line>Upload new template</span>
+     
+    </a> 
+  </mat-nav-list>
+</div>

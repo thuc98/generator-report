@@ -1,0 +1,27 @@
+<div class="form-group">
+  <h3>
+    Tải lên mẫu
+  </h3>
+   <div>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Template name</mat-label>
+      <input [(ngModel)]="name" type="text" matInput  >
+      <div *ngIf="error != null">
+        {{error}}
+      </div>
+ 
+    </mat-form-field>
+    </div>
+    <div>
+
+      <mat-label>Template File</mat-label>
+      <input type="file"
+             id="file"
+             (change)="handleFileInput($event.target.files)">
+   
+            </div>
+        <div>
+          <hr/>
+          <button (click)="uploadTemplate()" mat-raised-button color="primary" style="color:white">Upload</button>
+        </div>
+</div>
